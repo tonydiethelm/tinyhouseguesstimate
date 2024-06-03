@@ -1,4 +1,12 @@
 <style>
+/*
+Mobile First! But there's no needed navigation here, this is SPA. 
+Frankly, this isn't a mobile kind of thing, they'll need to open tabs for pricing. 
+Still, run it down the middle, separate sections with pictures or horizontal rules? 
+We want a running cost DIV floating on the upper right corner. 
+
+*/
+
 
 </style>
 
@@ -13,7 +21,10 @@ number of floor joists = length*12/16+1
 cost of floor joists = number of floor joists*width*2x6BoardFootCost. 
 number of roof joists = number of floor joists + 2
 cost of roof joists = number of floor joists*(width+2)*2x6BoardFootCost
-
+circumference in feet = length*2+width*2
+number of wall sheathing ply = circumference /4
+number of roof and floor sheathing ply = 2* (length /4)
+sheathing ply cost = sheathing cost * (number of wall sheathingy ply + number of roof and wall sheathing ply)
 
 
 */
