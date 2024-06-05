@@ -33,7 +33,7 @@ total cost of siding = cost of siding piece * square feet siding/square feet sid
 
 //basic information
 $: totalCost = trailerCost + costOfStuds + costOfFloorJoists + costOfRoofJoists + sheathingPlyCost
-+ houseWrapCost + roofingUnderlaymentCost;
++ houseWrapCost + roofingUnderlaymentCost + roofingCost + doorUnitCost + windowsCost;
 let length = 20;
 let width = 8;
 
@@ -75,11 +75,16 @@ if(length*width < 225){
 if(225 < length*width < 450){
     roofingUnderlaymentCost = graceIceWaterShieldUnitCost*2;
 }
+let roofingUnitCost = 92;
+let roofingCost = length * width / 30 * roofingUnitCost;
+
 
 //windows + door
 let numberOfWindows = 6;
 let windowUnitCost = 300;
 $: windowsCost = numberOfWindows * windowUnitCost;
+let doorUnitCost = 365;
+
 
 //electrical
 
@@ -165,14 +170,17 @@ Cost of drywall:
 
 <div id='stuffCostInputs'>
     <h3>Cost Inputs</h3>
-    <p>Thse costs are vaguely accurate as of the middle of 2024.</p>
+    <p>These costs are vaguely accurate as of the middle of 2024.</p>
     <p>Cost of your trailer:<input bind:value={trailerCost}></p>
     <p>Cost of a <a href="https://www.homedepot.com/p/2-in-x-4-in-x-8-ft-Prime-Stud-058449/312528776">2x4</a>:<input bind:value={twoByFourUnitCost}></p>
-    <p>Cost of sheathing ply:<input bind:value={sheathingPlyUnitCost}></p>
+    <p>Cost of <a href="https://www.homedepot.com/p/15-32-in-x-4-ft-x-8-ft-Sheathing-Plywood-Actual-0-438-in-x-48-in-x-96-in-20159/206827282">sheathing ply</a>:<input bind:value={sheathingPlyUnitCost}></p>
     <p>Cost of 9' by 150' <a href="https://www.homedepot.com/p/TYVEK-9-ft-x-150-ft-HomeWrap-Housewrap-1350-Sq-Ft-D15540826/308793219">housewrap</a>:<input bind:value={houseWrapUnitCost}></p>
     <p>Cost of <a href="https://www.homedepot.com/p/GCP-Applied-Technologies-Grace-Ice-and-Water-Shield-36-in-x-75-ft-Roll-Self-Adhered-Roofing-Underlayment-225-sq-ft-5003002/202088840">225sqft roll of Grace Ice and Water Shield, or equivalent</a>:<input bind:value={graceIceWaterShieldUnitCost}></p>
     <p>number of windows: <input bind:value={numberOfWindows}></p>
     <p>Cost of a window:<input bind:value={windowUnitCost}></p>
+    <p>Cost of <a href="https://www.homedepot.com/b/Building-Materials-Roofing-Roof-Panels-Metal-Roofing/10/N-5yc1vZapwhZ1z0sdg9">10' by 3' metal roofing panel</a>:<input bind:value={roofingUnitCost}></p>
+    <p>Cost of a <a href="https://www.homedepot.com/p/JELD-WEN-32-in-x-80-in-9-Lite-Primed-Steel-Prehung-Left-Hand-Inswing-Entry-Door-with-Brickmould-735641/202036412">door</a>:<input bind:value={doorUnitCost}></p>
+
     
 
 
@@ -201,6 +209,9 @@ Cost of drywall:
     <p>A 150' roll of Tyvek should do it? Maybe two. ${houseWrapCost}</p>
 
     <p>A 225sqft roll of Grace Ice and Water Shield should do it? Maybe two. ${roofingUnderlaymentCost}</p>
+
+    <p>Your roof is about {length*width}sqft, a roofing panel is about 30sqft, so you need about
+    {(length*width/30).toFixed(1)} of them at ${roofingCost.toFixed(2)}.</p>
 
     <p>And then I threw 15% on top, because it's always just a little more than you think it is.</p>
 
