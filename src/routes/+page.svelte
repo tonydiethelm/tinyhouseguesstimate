@@ -23,22 +23,7 @@ We want a running cost DIV floating on the upper right corner.
 
 <script>
 /*
-Calculate: 
-2x4BoardFoot cost = cost of stud / length of stud in feet.
-2x6BoardFoot cost = 2x4BoardFoot cost * 6/4
-number of studs = (2L+2W)*12/16+4
-cost of studs = number of studs*cost of stud
-number of floor joists = length*12/16+1
-cost of floor joists = number of floor joists*width*2x6BoardFootCost. 
-number of roof joists = number of floor joists + 2
-cost of roof joists = number of floor joists*(width+2)*2x6BoardFootCost
-circumference in feet = length*2+width*2
-assume 8' tall walls.
-number of wall sheathing ply = circumference /4
-number of roof and floor sheathing ply = 2*(length /4)
-sheathing ply cost = sheathing cost * (number of wall sheathingy ply + number of roof and wall sheathing ply)
-square feet walls = 8*2*length+8*2*width.
-total cost of water barrier = cost of water barrier * square feet walls / square feet barrier roll. 
+
 square feet roof = length * 8
 total cost of roof barrier = cost of roof barrier * square feet roof/square feet roof barrier roll. 
 total cost of roofing = cost of roofing piece * square feet roof/square feet roofing piece.  
@@ -47,13 +32,14 @@ total cost of siding = cost of siding piece * square feet siding/square feet sid
 */
 
 //basic information
-$: totalCost = trailerCost + costOfStuds + costOfFloorJoists + costOfRoofJoists + sheathingPlyCost;
+$: totalCost = trailerCost + costOfStuds + costOfFloorJoists + costOfRoofJoists + sheathingPlyCost
++ houseWrapCost + roofingUnderlaymentCost;
 let length = 20;
 let width = 8;
 
 //trailer and framing costs
 let trailerCost = 4000;
-let twoByFourUnitCost = 4;
+let twoByFourUnitCost = 3.73;
 $: twoByFourBFCost = twoByFourUnitCost/8;
 $: twoBySixBFCost = twoByFourBFCost*6/4;
 $: numberOfStuds = 2*(length+width)*(12/16)+4;
@@ -71,7 +57,43 @@ $: numberOfRoofAndFloorSheathingPly = 2*(length /4);
 $: sheathingPlyCost = sheathingPlyUnitCost * (numberOfWallSheathingPly+numberOfRoofAndFloorSheathingPly);
 
 //housewrap
-let housewrapUnitCost = 225;
+let houseWrapUnitCost = 225;
+let houseWrapCost;
+if(circumference < 150){
+    houseWrapCost = houseWrapUnitCost;
+}
+if(150 < circumference < 300){
+    houseWrapCost = houseWrapUnitCost*2;
+}
+
+//roofing
+let graceIceWaterShieldUnitCost = 246;
+let roofingUnderlaymentCost;
+if(length*width < 225){
+    roofingUnderlaymentCost = graceIceWaterShieldUnitCost;
+}
+if(225 < length*width < 450){
+    roofingUnderlaymentCost = graceIceWaterShieldUnitCost*2;
+}
+
+//windows + door
+let numberOfWindows = 6;
+let windowUnitCost = 300;
+$: windowsCost = numberOfWindows * windowUnitCost;
+
+//electrical
+
+
+//plumbing
+
+
+//drywall
+
+
+//flooring
+
+
+//cabinets
 
 
 </script>
@@ -111,7 +133,7 @@ Cost of drywall:
 
 -->
 <div id='floatingCost'>
-Total Cost: ${totalCost}
+<p>Total Cost: ${(totalCost*1.15).toFixed(2)}</p>
 
 </div>
 
@@ -143,9 +165,17 @@ Total Cost: ${totalCost}
 
 <div id='stuffCostInputs'>
     <h3>Cost Inputs</h3>
+    <p>Thse costs are vaguely accurate as of the middle of 2024.</p>
     <p>Cost of your trailer:<input bind:value={trailerCost}></p>
-    <p>Cost of a 2x4:<input bind:value={twoByFourUnitCost}></p>
+    <p>Cost of a <a href="https://www.homedepot.com/p/2-in-x-4-in-x-8-ft-Prime-Stud-058449/312528776">2x4</a>:<input bind:value={twoByFourUnitCost}></p>
     <p>Cost of sheathing ply:<input bind:value={sheathingPlyUnitCost}></p>
+    <p>Cost of 9' by 150' <a href="https://www.homedepot.com/p/TYVEK-9-ft-x-150-ft-HomeWrap-Housewrap-1350-Sq-Ft-D15540826/308793219">housewrap</a>:<input bind:value={houseWrapUnitCost}></p>
+    <p>Cost of <a href="https://www.homedepot.com/p/GCP-Applied-Technologies-Grace-Ice-and-Water-Shield-36-in-x-75-ft-Roll-Self-Adhered-Roofing-Underlayment-225-sq-ft-5003002/202088840">225sqft roll of Grace Ice and Water Shield, or equivalent</a>:<input bind:value={graceIceWaterShieldUnitCost}></p>
+    <p>number of windows: <input bind:value={numberOfWindows}></p>
+    <p>Cost of a window:<input bind:value={windowUnitCost}></p>
+    
+
+
 
 </div>
 
@@ -167,5 +197,11 @@ Total Cost: ${totalCost}
         {numberOfRoofAndFloorSheathingPly} number of roof and floor sheathing plywood pieces, 
     which will be about ${sheathingPlyCost}. Honestly, you should buy thicker plywood for your floor, 
     I'm just being lazy here. </p>
+
+    <p>A 150' roll of Tyvek should do it? Maybe two. ${houseWrapCost}</p>
+
+    <p>A 225sqft roll of Grace Ice and Water Shield should do it? Maybe two. ${roofingUnderlaymentCost}</p>
+
+    <p>And then I threw 15% on top, because it's always just a little more than you think it is.</p>
 
 </div>
