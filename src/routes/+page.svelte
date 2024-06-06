@@ -286,3 +286,18 @@ Cost of drywall:
     <p>And then I threw 15% on top, because it's always just a little more than you think it is.</p>
 
 </div>
+
+<hr>
+
+<div id='labor'>
+    <p>People always complain about the price of Tiny Houses. I'm adding a labor cost to combat that
+        complaining. Labor deserves to get paid! 
+    </p>
+    <p>Assume 2 people, working 40 hour weeks, for 3 months. Assume we're paying them $50/hour. You
+        want the people building your home to be worth that much, trust me. 
+        2people*40hrs/week*$50/hr*12weeks=$48,000
+    </p>
+    <p>And these prices are basic. Those beautiful pictures on Instagram take time and skill and nice 
+        materials. I bought cabinets from Ikea here... You get what you pay for. No, that $100,000 
+    Tiny House isn't outrageously priced.</p>
+</div>
