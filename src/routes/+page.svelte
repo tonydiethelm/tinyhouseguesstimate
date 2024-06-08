@@ -19,12 +19,33 @@ We want a running cost DIV floating on the upper right corner.
     border-color: black;
     padding: 10px;
     background-color: white;
+    display: block;
+    font-size: large;
 }
 
 div {
-    padding: 1% 5%;
+    padding: 1% 10%;
 }
 
+#ad {
+    padding: 1% 15%;
+    border-style: solid;
+    border-color: black;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+#paypal {
+    border-radius: 10px;
+    background-color: blue;
+    color: white;
+    height: 60px !important;
+    width: 217px !important;
+    text-align: center;
+    line-height: 60px;
+
+}
 
 </style>
 
@@ -34,7 +55,7 @@ div {
 //basic information
 $: totalCost = trailerCost + costOfStuds + costOfFloorJoists + costOfRoofJoists + sheathingPlyCost
 + houseWrapCost + roofingUnderlaymentCost + roofingCost + doorUnitCost + windowsCost + sidingCost
-+ drywallCost + flooringCost + electricalCost + plumbingCost + cabinetsCost;
++ insulationCost + drywallCost + flooringCost + electricalCost + plumbingCost + cabinetsCost;
 let length = 20;
 let width = 8;
 
@@ -90,6 +111,11 @@ let windowUnitCost = 300;
 $: windowsCost = numberOfWindows * windowUnitCost;
 let doorUnitCost = 365;
 
+//insulation
+let insulationSqFtCost = 1.18;
+let squareFeetTotal = 2*(length+width)*8 + 2*(length*width); //2 walls + roof and ceiling. Rough. 
+let insulationCost = insulationSqFtCost * squareFeetTotal;
+
 
 //electrical
 //assume circumference x2 wiring length and an outlet every 4?
@@ -135,6 +161,7 @@ $: sidingCost = circumference/4*sidingUnitCost;
 </script>
 
 
+
 <!--
 use pre filled out forms to gather needed data to do cals. 
 Do calcs
@@ -171,10 +198,11 @@ Cost of drywall:
 <div id='floatingCost'>
 <p>Total Cost: ${(totalCost*1.15).toFixed(2)}</p>
 
+
 </div>
 
 
-<h1>Welcome to the Tiny House Cost Guesstimator</h1>
+<div><h1>Welcome to the Tiny House Cost Guesstimator</h1></div>
 
 <div id='intro'>
     <p>This is meant to be a cost guesstimator for a Tiny House. 
@@ -189,7 +217,17 @@ Cost of drywall:
         really frustrating. </p>
 </div>
 
-<hr>
+<div id="ad">
+    <span>Hey! If this is useful to you, consider buying me lunch or donating to my kids' lego fund. I could have put an ad here and
+        sold your eyeballs to The Man, but I didn't, because ads are evil. 
+    </span>
+    <span>
+        <a href="https://www.buymeacoffee.com/tonydiethelm" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+        <a target="_blank" href="https://paypal.me/tonydiethelm?country.x=US&locale.x=en_US"><div id="paypal">Paypal Me</div></a>
+    </span>
+
+
+</div>
 
 <div id='basicInputs'>
     <h3>Basic Stuff</h3>
@@ -212,6 +250,7 @@ Cost of drywall:
     <p>Cost of <a target="_blank" rel="noopener noreferrer" href="https://www.homedepot.com/b/Building-Materials-Roofing-Roof-Panels-Metal-Roofing/10/N-5yc1vZapwhZ1z0sdg9">10' by 3' metal roofing panel</a>:<input bind:value={roofingUnitCost}></p>
     <p>Cost of a <a  target="_blank" rel="noopener noreferrer" href="https://www.homedepot.com/p/JELD-WEN-32-in-x-80-in-9-Lite-Primed-Steel-Prehung-Left-Hand-Inswing-Entry-Door-with-Brickmould-735641/202036412">door</a>:<input bind:value={doorUnitCost}></p>
     <p>Cost of a <a  target="_blank" rel="noopener noreferrer" href="https://www.homedepot.com/p/Plytanium-Plywood-Siding-Panel-T1-11-8-IN-OC-Nominal-19-32-in-x-4-ft-x-8-ft-Actual-0-563-in-x-48-in-x-96-in-113699/100000016">siding panel</a>:<input bind:value={sidingUnitCost}></p>
+    <p>Cost of a <a  target="_blank" rel="noopener noreferrer" href="https://www.homedepot.com/s/roxul%20insulation?NCNI-5">square foot of insulation</a>:<input bind:value={insulationSqFtCost}></p>
     <p>Cost of a <a  target="_blank" rel="noopener noreferrer" href="https://www.homedepot.com/p/USG-Sheetrock-Brand-1-2-in-x-4-ft-x-8-ft-UltraLight-Drywall-14113411708/202530243">drywall panel</a>:<input bind:value={drywallUnitCost}></p>
     <p>Cost of <a  target="_blank" rel="noopener noreferrer" href="https://www.homedepot.com/p/TrafficMaster-Jessamine-Oak-7-mm-T-x-7-5-in-W-Laminate-Wood-Flooring-26-8-sqft-case-TM1/320125355">1sqft of laminate flooring</a>:<input bind:value={flooringUnitCost}></p>
     <p>Cost of a small electrical panel:<input bind:value={panelUnitCost}></p>
@@ -259,8 +298,10 @@ Cost of drywall:
     <p>Door and window math is basic, at ${(doorUnitCost+windowsCost).toFixed(2)}</p>
     
     <p>I'm assuming T1-11 siding. I hate T1-11, but it's basic and gets the job done and I had to
-        pick something. You need about {(circumference/4).toFixed(1)} pieces at ${sidingCost.toFixed(2)}.
+        pick something. You need about {(circumference/4).toFixed(1)} pieces at ${sidingCost.toFixed(2)}.    
     </p>
+
+    <p>You'll need {squareFeetTotal} square feet of insulation. ${insulationCost}</p>
 
     <p>You need about {(circumference/4).toFixed(1)} pieces of drywall at ${drywallCost.toFixed(2)}.</p>
 
@@ -298,6 +339,6 @@ Cost of drywall:
         2people*40hrs/week*$50/hr*12weeks=$48,000
     </p>
     <p>And these prices are basic. Those beautiful pictures on Instagram take time and skill and nice 
-        materials. I bought cabinets from Ikea here... You get what you pay for. No, that $100,000 
-    Tiny House isn't outrageously priced.</p>
+        materials. I bought cabinets from Ikea here... You get what you pay for. No, that absolutely 
+        gorgeous $100,000 Tiny House isn't outrageously priced.</p>
 </div>
