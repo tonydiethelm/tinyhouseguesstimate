@@ -32,8 +32,10 @@ div {
     border-style: solid;
     border-color: black;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
 }
 
 #paypal {
@@ -218,13 +220,13 @@ Cost of drywall:
 </div>
 
 <div id="ad">
-    <span>Hey! If this is useful to you, consider buying me lunch or donating to my kids' lego fund. I could have put an ad here and
+    <p>Hey! If this is useful to you, consider buying me lunch or donating to my kids' lego fund. I could have put an ad here and
         sold your eyeballs to The Man, but I didn't, because ads are evil. 
-    </span>
-    <span>
-        <a href="https://www.buymeacoffee.com/tonydiethelm" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
-        <a target="_blank" href="https://paypal.me/tonydiethelm?country.x=US&locale.x=en_US"><div id="paypal">Paypal Me</div></a>
-    </span>
+    <p>
+    <a href="https://www.buymeacoffee.com/tonydiethelm" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+    
+    <a target="_blank" href="https://paypal.me/tonydiethelm?country.x=US&locale.x=en_US"><div id="paypal">Paypal Me</div></a>
+
 
 
 </div>
@@ -331,6 +333,7 @@ Cost of drywall:
 <hr>
 
 <div id='labor'>
+    <h3>The Cost Of Labor</h3>
     <p>People always complain about the price of Tiny Houses. I'm adding a labor cost to combat that
         complaining. Labor deserves to get paid! 
     </p>
